@@ -36,8 +36,8 @@ const programSchema = new Schema({
 
 const classSchema = new Schema({
     date: Date, // fecha específica de la clase
-    start: Date,
-    end: Date,
+    start: String,
+    end: String,
     professor: String,
     mat: String,
     description: String,
