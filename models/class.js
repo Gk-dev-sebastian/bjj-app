@@ -1,5 +1,39 @@
 const { Schema, model } = require('mongoose');
 
+const drillSchema = new Schema({
+    drill: String
+}, { _id: false });
+
+const curriculumSchema = new Schema({
+    groupName: String,
+    drills: [drillSchema]
+});
+
+const weekSchema = new Schema({
+    weekName: String, 
+    curriculum: [curriculumSchema]
+});
+
+const techniqueSchema = new Schema({
+    technique: String
+}, { _id: false });
+
+const techniquesGroupSchema = new Schema({
+    groupName: String,
+    techniques: [techniqueSchema]
+});
+
+const programSchema = new Schema({
+    programName: String,
+    description: String,
+    date: String,
+    weeks: [weekSchema],
+    mainConcepts: [String],
+    mainPositions: [String],
+    techniques: [techniquesGroupSchema],
+    user: String
+});
+
 const classSchema = new Schema({
     date: Date, // fecha específica de la clase
     start: Date,
@@ -7,10 +41,7 @@ const classSchema = new Schema({
     professor: String,
     mat: String,
     description: String,
-    program: {
-        type: Schema.Types.ObjectId, 
-        ref: 'Program' 
-    },
+    program: [programSchema],
     capacity: Number,
     duration: Number, // Duración en minutos
     name: String,
@@ -26,11 +57,6 @@ const classSchema = new Schema({
     athletes: [{
         type: Schema.Types.ObjectId,
         ref: 'Athlete' 
-    }],
-    video: [{
-        type: String, // URL o ruta del video
-        title: String, // Título del video (opcional)
-        description: String // Descripción del video (opcional)
     }]
 });
 
