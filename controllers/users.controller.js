@@ -114,7 +114,7 @@ const Athletes = require('../models/athlete');
                 });
             }
     
-            const user = new User({ ...rest, email, role: 'TRIAL-VISITOR', status: 'pending' });
+            const user = new User({ ...rest, email, role: 'MEMBER', status: 'pending' });
     
             // save user
             await user.save();
