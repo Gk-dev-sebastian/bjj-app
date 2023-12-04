@@ -23,8 +23,8 @@ dbConnection();
 app.use( express.static('public'));
 
 //helmet
-const helmet = require('helmet');
-app.use(helmet());
+//const helmet = require('helmet');
+//app.use(helmet());
 
 // routes
 app.get('/healthapi', (req, res) => {
