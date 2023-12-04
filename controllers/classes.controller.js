@@ -2,8 +2,7 @@ const Class = require('../models/class');
 
 exports.getAllClasses = async (req, res) => {
     try {
-        const classes = await Class.find()
-            .populate('athletes', '_id name lastName age rank');
+        const classes = await Class.find();
         res.status(200).json(classes);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -13,8 +12,7 @@ exports.getAllClasses = async (req, res) => {
 exports.getClassesByDate = async (req, res) => {
     const date = new Date(req.params.date);
     try {
-        const classes = await Class.find({ date: { $gte: date, $lt: new Date(date.getTime() + 24 * 60 * 60 * 1000) } })
-            .populate('athletes', '_id name lastName age rank');
+        const classes = await Class.find({ date: { $gte: date, $lt: new Date(date.getTime() + 24 * 60 * 60 * 1000) } });
         res.status(200).json(classes);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -23,8 +21,7 @@ exports.getClassesByDate = async (req, res) => {
 
 exports.getClassById = async (req, res) => {
     try {
-        const classData = await Class.findById(req.params.id)
-            .populate('athletes', '_id name lastName age rank');
+        const classData = await Class.findById(req.params.id);
         if (!classData) {
             return res.status(404).json({ error: 'Class not found' });
         }
