@@ -15,16 +15,16 @@ router.get('/date/:date', classController.getClassesByDate);
 router.get('/:id', classController.getClassById);
 
 // Crear una nueva clase
-router.post('/', validateAdminRole, classController.createClass);
+router.post('/', classController.createClass);
 
 // Actualizar todas las clases para la siguiente semana
-router.put('/update-week', validateAdminRole, classController.updateWeek);
+router.put('/update-week', classController.updateWeek);
 
 // Actualizar una clase específica
 router.put('/:id', classController.updateClass);
 
 // Eliminar una clase específica
-router.delete('/:id', validateAdminRole, classController.deleteClass);
+router.delete('/:id', classController.deleteClass);
 
 
 module.exports = router;
