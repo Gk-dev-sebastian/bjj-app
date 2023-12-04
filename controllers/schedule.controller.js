@@ -27,7 +27,7 @@ exports.getWeekSchedule = async (req, res) => {
 
 // Añadir una nueva clase a un día específico del horario
 exports.addClassToSchedule = async (req, res) => {
-    const { classId, date } = req.body;
+    const { classId, date } = req.body; // 'date' es una cadena en formato 'YYYY-MM-DD'
 
     try {
         const schedule = await Schedule.findOne({ weekStarting: { $lte: date } }).sort({ weekStarting: -1 });
@@ -37,11 +37,14 @@ exports.addClassToSchedule = async (req, res) => {
             return res.status(404).json({ error: 'Schedule or class not found' });
         }
 
-        // Convierte la fecha a formato 'YYYY-MM-DD' antes de comparar
-        const formattedDate = new Date(date).toISOString().split('T')[0];
+        // La fecha 'date' ya está en formato 'YYYY-MM-DD', no necesita ser formateada de nuevo
+        const formattedDate = date;
 
         // Encuentra el día específico en el horario
-        const dayToUpdate = schedule.days.find(day => day.day.toISOString().split('T')[0] === formattedDate);
+        const dayToUpdate = schedule.days.find(day => {
+            // Usa toLocaleDateString para obtener la fecha en formato 'YYYY-MM-DD'
+            return day.day.toLocaleDateString('en-CA') === formattedDate;
+        });
 
         if (!dayToUpdate) {
             return res.status(404).json({ error: 'Day not found in schedule' });
@@ -62,7 +65,6 @@ exports.addClassToSchedule = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 
 
 exports.createScheduleForWeek = async (req, res) => {
