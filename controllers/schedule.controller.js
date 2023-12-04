@@ -27,31 +27,29 @@ exports.getWeekSchedule = async (req, res) => {
 
 // Añadir una nueva clase a un día específico del horario
 exports.addClassToSchedule = async (req, res) => {
-    const { classId, dayDate } = req.body; // Utiliza 'dayDate' para especificar a qué día agregar la clase
-
+    const { classId, date } = req.body;
     try {
-        // Asumiendo que 'dayDate' es una fecha que representa el día específico al que quieres agregar la clase
-        const schedule = await Schedule.findOne({ "days.day": dayDate });
-
+        const schedule = await Schedule.findOne({ weekStarting: { $lte: date } }).sort({ weekStarting: -1 });
         const classData = await Class.findById(classId);
+
         if (!schedule || !classData) {
             return res.status(404).json({ error: 'Schedule or class not found' });
         }
 
-        // Encontrar el día específico por fecha en el arreglo 'days'
-        const dayToUpdate = schedule.days.find(day => 
-            day.day.toISOString().split('T')[0] === dayDate
-        );
+        // Convierte la fecha a formato 'YYYY-MM-DD' antes de comparar
+        const formattedDate = new Date(date).toISOString().split('T')[0];
+
+        // Encuentra el día específico en el horario
+        const dayToUpdate = schedule.days.find(day => day.day.toISOString().split('T')[0] === formattedDate);
 
         if (!dayToUpdate) {
             return res.status(404).json({ error: 'Day not found in schedule' });
         }
 
-        // Agregar la clase al día correspondiente
+        // Agrega la clase al día
         dayToUpdate.classes.push({ class: classId });
 
         await schedule.save();
-
         res.status(200).json({ message: 'Class added to schedule successfully', updatedSchedule: schedule });
     } catch (error) {
         res.status(500).json({ error: error.message });
