@@ -28,6 +28,7 @@ exports.getWeekSchedule = async (req, res) => {
 // Añadir una nueva clase a un día específico del horario
 exports.addClassToSchedule = async (req, res) => {
     const { classId, date } = req.body;
+
     try {
         const schedule = await Schedule.findOne({ weekStarting: { $lte: date } }).sort({ weekStarting: -1 });
         const classData = await Class.findById(classId);
@@ -46,6 +47,12 @@ exports.addClassToSchedule = async (req, res) => {
             return res.status(404).json({ error: 'Day not found in schedule' });
         }
 
+        // Verifica si la clase ya ha sido agregada a este día
+        const isClassAlreadyAdded = dayToUpdate.classes.some(c => c.class.toString() === classId);
+        if (isClassAlreadyAdded) {
+            return res.status(400).json({ error: 'Class already added to this day' });
+        }
+
         // Agrega la clase al día
         dayToUpdate.classes.push({ class: classId });
 
@@ -55,6 +62,7 @@ exports.addClassToSchedule = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 
 exports.createScheduleForWeek = async (req, res) => {
