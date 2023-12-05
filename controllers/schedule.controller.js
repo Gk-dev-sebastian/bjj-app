@@ -116,7 +116,7 @@ exports.createDayInSchedule = async (req, res) => {
 
 // Actualizar un día específico en el horario
 exports.updateDayInSchedule = async (req, res) => {
-    const { weekStarting, day, dayName, workingDay } = req.body;
+    const { weekStarting, dayDate, classes } = req.body; // Asumiendo que 'dayDate' es la fecha del día y 'classes' es el arreglo de clases actualizado
 
     try {
         const schedule = await Schedule.findOne({ weekStarting: weekStarting });
@@ -125,10 +125,13 @@ exports.updateDayInSchedule = async (req, res) => {
             return res.status(404).json({ error: 'No schedule found for the given week' });
         }
 
-        const dayToUpdate = schedule.days.find(d => d.day.toISOString() === day);
+        // Encuentra el día específico y actualiza sus clases
+        const dayToUpdate = schedule.days.find(d => d.day.toISOString().split('T')[0] === dayDate);
+        if (!dayToUpdate) {
+            return res.status(404).json({ error: 'Day not found in schedule' });
+        }
 
-        if (dayName) dayToUpdate.dayName = dayName;
-        if (workingDay) dayToUpdate.workingDay = workingDay;
+        dayToUpdate.classes = classes; // Actualiza las clases del día
 
         await schedule.save();
 
