@@ -51,7 +51,7 @@ const getAllAthletes = async (req, res = response) => {
         } else if (userRole === 'MEMBER') {
             const user = await User.findById(userId).populate({
                 path: 'athletes', // Suponiendo que el usuario tiene una referencia a sus atletas con este nombre
-                select: 'name email rank age weight nationality' // Solo algunos campos como ejemplo, ajusta según necesites
+                //select: 'name email rank age weight nationality' // Solo algunos campos como ejemplo, ajusta según necesites
             });
             return res.status(200).json({
                 ok: true,
