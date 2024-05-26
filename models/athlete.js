@@ -19,6 +19,9 @@ const athleteSchema = Schema({
     weight:Number,
     age:Number,
     rank:String,
+    date_sign:String,
+    last_promotion:String,
+    next_promotion:String,
     healthConditions:Boolean,//*
     conditions:[conditionsItemsSchema],
 });
