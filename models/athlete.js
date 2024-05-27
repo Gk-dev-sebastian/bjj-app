@@ -22,7 +22,6 @@ const athleteSchema = Schema({
     nationality:String,
     weight:Number,
     age:Number,
-    date_sign:String,
     current_rank:String,
     last_promotion:String,
     next_promotion:String,
