@@ -42,4 +42,5 @@ athleteSchema.method('toJSON', function() {
     return object;
 });
 
-module.exports = model('Athlete', athleteSchema);
+
+module.exports = model('Athletes', athleteSchema);
