@@ -19,6 +19,7 @@ const athleteSchema = new Schema({
     current_rank: String,
     last_promotion: String,
     next_promotion: String,
+    stripes:Number,
     signature: String,
     type: String,
     status: {

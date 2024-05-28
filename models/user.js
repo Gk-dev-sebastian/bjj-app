@@ -30,7 +30,7 @@ const userSchema = Schema({
     dateSignedIn:String,
     photoURL: String,
     emailVerified: Boolean,
-    athletes: [{ type: Schema.Types.ObjectId, ref: 'Athletes' }]
+
 
 });
 
