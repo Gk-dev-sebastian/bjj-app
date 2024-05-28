@@ -1,10 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-const conditionsItemsSchema = Schema({
-    name: String,
-    medication: String
-});
-
 const athleteSchema = Schema({
     
     email: String,
@@ -25,8 +20,6 @@ const athleteSchema = Schema({
     current_rank:String,
     last_promotion:String,
     next_promotion:String,
-    healthConditions:Boolean,//*
-        conditions:[conditionsItemsSchema],
     signature:String,
     type:String,
     status:{
