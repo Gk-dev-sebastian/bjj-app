@@ -23,7 +23,7 @@ const createAthlete = async (req, res = response) => {
 const getAthlete = async (req, res = response) => {
     const athleteId = req.params.id;
     try {
-        const athlete = await Athlete.findById(athleteId).populate('user', 'name email'); // populates user data
+        const athlete = await Athlete.findById(athleteId); 
         res.status(200).json({
             ok: true,
             athlete
@@ -38,31 +38,17 @@ const getAthlete = async (req, res = response) => {
 }
 
 const getAllAthletes = async (req, res = response) => {
-    const userId = req.userId; 
-    const userRole = req.role; 
+    
 
     try {
-        if (userRole === 'ADMIN') {
-            const athletes = await Athlete.find().populate('user', 'name email');
-            return res.status(200).json({
-                ok: true,
-                athletes
-            });
-        } else if (userRole === 'MEMBER') {
-            const user = await User.findById(userId).populate({
-                path: 'athletes', // Suponiendo que el usuario tiene una referencia a sus atletas con este nombre
-                //select: 'name email rank age weight nationality' // Solo algunos campos como ejemplo, ajusta según necesites
-            });
-            return res.status(200).json({
-                ok: true,
-                athletes: user.athletes
-            });
-        } else {
-            return res.status(400).json({
-                ok: false,
-                msg: 'Role not valid'
-            });
-        }
+       
+        const athletes = await Athlete.find();
+        return res.status(200).json({
+            ok: true,
+            athletes
+        });
+       
+        
     } catch (error) {
         console.error(error);
         res.status(500).json({
@@ -84,7 +70,7 @@ const searchAthlete = async (req, res) => {
                 { name: regex },
                 { lastName: regex }
             ]
-        }).populate('user', 'name email');
+        });
 
         res.json({
             ok: true,
