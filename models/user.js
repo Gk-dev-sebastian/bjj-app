@@ -16,6 +16,7 @@ const userSchema = Schema({
     waiver:Boolean,
     signature:String,
     type:String,
+    bio:String,
     status:{
         type:String,
         required: true,

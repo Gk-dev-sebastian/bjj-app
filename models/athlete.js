@@ -22,6 +22,7 @@ const athleteSchema = new Schema({
     stripes:Number,
     signature: String,
     type: String,
+    notes:String,
     status: {
         type: String,
         required: true,
