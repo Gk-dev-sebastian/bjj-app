@@ -17,7 +17,7 @@ const userSchema = Schema({
     signature:String,
     type:String,
     bio:String,
-    todo:String;
+    todo:String,
     status:{
         type:String,
         required: true,
