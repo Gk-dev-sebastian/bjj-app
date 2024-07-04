@@ -1,13 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-const programSchema = new Schema({
-    programName: String,
-    description: String,
-    date: String,
-    week: Number,
-    user: String
-});
-
 const classSchema = new Schema({
     date: Date, // fecha específica de la clase
     start: String,
@@ -15,7 +7,13 @@ const classSchema = new Schema({
     professor: String,
     mat: String,
     description: String,
-    program: [programSchema],
+    program: {
+        programName: String,
+        description: String,
+        date: String,
+        week: Number,
+        user: String
+    },
     capacity: Number,
     duration: Number, // Duración en minutos
     name: String,
