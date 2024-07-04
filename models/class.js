@@ -4,7 +4,7 @@ const programSchema = new Schema({
     programName: String,
     description: String,
     date: String,
-    week: {},
+    week: Number,
     user: String
 });
 
