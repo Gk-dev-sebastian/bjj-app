@@ -7,6 +7,7 @@ const {
     createFlowC,
     getAllFlowC,
     getFlowCById,
+    getFlowCByName,
     updateFlowC,
     deleteFlowC
 } = require('../controllers/curriculum.controller');
@@ -21,6 +22,8 @@ router.get('/', validateAdminRole, getAllFlowC);
 
 // Obtener un programa específico por ID
 router.get('/:id', validateAdminRole, getFlowCById);
+
+router.post('/curriculum', getFlowCByName);
 
 // Actualizar programa (Opcional: suponiendo que tienes una función para esto)
 router.put(

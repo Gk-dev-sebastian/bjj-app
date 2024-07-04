@@ -73,6 +73,31 @@ const getFlowCById = async (req, res) => {
     }
 }
 
+const getFlowCByName = async (req, res) => {
+    try {
+        const { programName } = req.body; 
+
+        if (!programName) {
+            return res.status(400).json({ message: "Program name is required." });
+        }
+
+        const flowC = await  FlowC.findOne({ programName: programName });
+
+        if (!flowC) {
+            return res.status(404).json({ message: "Curriculum not found." });
+        }
+
+        res.status(200).json({
+            ok: true,
+            flowC
+        });
+        
+    } catch (error) {
+        res.status(500).json({ message: "Error retrieving curriculum", error: error.message });
+    }
+    
+}
+
 const updateFlowC = async (req, res) => {
 
     const flowCId = req.params.id;
@@ -139,6 +164,7 @@ module.exports = {
    createFlowC,
    getAllFlowC,
    getFlowCById,
+   getFlowCByName,
    updateFlowC,
    deleteFlowC
 }
