@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { stringify } = require('uuid');
 
 const userSchema = Schema({
 
@@ -28,6 +29,7 @@ const userSchema = Schema({
         required: true,
         default: 'ADMIN'
     },
+    classPay:Number,
     active:Boolean,
     dateSignedIn:String,
     photoURL: String,
