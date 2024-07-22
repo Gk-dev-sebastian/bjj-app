@@ -114,7 +114,7 @@ const Athletes = require('../models/athlete');
     
                 return res.status(400).json({
                     ok: false,
-                    msg: 'This email already exists'
+                    msg: 'This email already exists, try again'
                 });
     
             }
