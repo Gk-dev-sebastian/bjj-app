@@ -7,8 +7,8 @@ const { getUsers,
         searchUser, 
         updateUser, 
         deleteUser, 
-        createUsers,
-        completeRegistration } = require('../controllers/users.controller');
+        createUsers
+      } = require('../controllers/users.controller');
 
 const router = Router();
 
