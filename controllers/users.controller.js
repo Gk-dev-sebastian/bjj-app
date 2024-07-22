@@ -101,27 +101,44 @@ const Athletes = require('../models/athlete');
     //=====================================================
 
     const createUsers = async( req, res = response ) => {
-        const { email, ...rest } = req.body;
+
+        const { pass, email } = req.body;
+    
+        console.log( req.body);
     
         try {
+    
             const emailExists= await User.findOne({ email });
     
             if( emailExists ) {
+    
                 return res.status(400).json({
                     ok: false,
                     msg: 'This email already exists'
                 });
+    
             }
     
-            const user = new User({ ...rest, email, role: 'MEMBER', status: 'pending' });
+            const user = new User( req.body );
+    
+            // encrypt pass
+            const salt = bcryptjs.genSaltSync();
+            user.pass = bcryptjs.hashSync( pass, salt );
     
             // save user
             await user.save();
     
-            res.status(201).json({
+            // generate token
+            //const token = await generateJTW( user._id, user.name, user.email );
+    
+            res.json({
+        
                 ok: true,
-                user
+                user,
+                //token
+                
             });
+    
     
         } catch (error) {
             console.log( error );
@@ -130,51 +147,52 @@ const Athletes = require('../models/athlete');
                 msg: 'Unexpected error'
             });
         }
+    
     }
 
     //=====================================================
 
-    const completeRegistration = async( req, res = response ) => {
-        const { email, pass, paymentDetails } = req.body;
+    // const completeRegistration = async( req, res = response ) => {
+    //     const { email, pass, paymentDetails } = req.body;
     
-        try {
-            const user = await User.findOne({ email });
+    //     try {
+    //         const user = await User.findOne({ email });
     
-            if( !user ) {
-                return res.status(404).json({
-                    ok: false,
-                    msg: 'User not found'
-                });
-            }
+    //         if( !user ) {
+    //             return res.status(404).json({
+    //                 ok: false,
+    //                 msg: 'User not found'
+    //             });
+    //         }
     
-            // Encrypt pass
-            const salt = bcryptjs.genSaltSync();
-            const hashedPass = bcryptjs.hashSync( pass, salt );
+    //         // Encrypt pass
+    //         const salt = bcryptjs.genSaltSync();
+    //         const hashedPass = bcryptjs.hashSync( pass, salt );
     
-            user.pass = hashedPass;
+    //         user.pass = hashedPass;
     
-            // TODO: Process paymentDetails with your payment solution.
-            // This could be sending data to Stripe, PayPal, etc.
-            // After successful payment, adjust the user's status and role accordingly.
+    //         // TODO: Process paymentDetails with your payment solution.
+    //         // This could be sending data to Stripe, PayPal, etc.
+    //         // After successful payment, adjust the user's status and role accordingly.
             
-            user.role = 'MEMBER';
-            user.status = 'active';
+    //         user.role = 'MEMBER';
+    //         user.status = 'active';
     
-            await user.save();
+    //         await user.save();
     
-            res.status(200).json({
-                ok: true,
-                msg: 'Registration completed successfully'
-            });
+    //         res.status(200).json({
+    //             ok: true,
+    //             msg: 'Registration completed successfully'
+    //         });
     
-        } catch (error) {
-            console.log( error );
-            res.status(500).json({
-                ok: false,
-                msg: 'Unexpected error'
-            });
-        }
-    }
+    //     } catch (error) {
+    //         console.log( error );
+    //         res.status(500).json({
+    //             ok: false,
+    //             msg: 'Unexpected error'
+    //         });
+    //     }
+    // }
     
     
 

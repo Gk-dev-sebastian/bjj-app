@@ -116,7 +116,7 @@ const sendResetEmail = async (email, token) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.EMAIL_USER, // Pon tus credenciales en variables de entorno
+            user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
         }
     });
@@ -125,13 +125,15 @@ const sendResetEmail = async (email, token) => {
         from: process.env.EMAIL_USER,
         to: email,
         subject: 'Password Reset',
-        text: `You requested a password reset. Please click on the following link, or paste it into your browser to complete the process:
-              http://yourfrontendurl.com/reset/${token}
-              If you did not request this, please ignore this email and your password will remain unchanged.`
+        html: `<h1>Password Reset Request</h1>
+               <p>You requested a password reset. Please click on the following link, or paste it into your browser to complete the process:</p>
+               <a href="http://yourfrontendurl.com/reset/${token}">Reset Password</a>
+               <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>`
     };
 
-    return transporter.sendMail(mailOptions); // Esta función devuelve una promesa
+    return transporter.sendMail(mailOptions);
 };
+
 
 const requestPasswordReset = async (req, res) => {
     const { email } = req.body;
