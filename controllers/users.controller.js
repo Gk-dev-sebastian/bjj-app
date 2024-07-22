@@ -150,53 +150,7 @@ const Athletes = require('../models/athlete');
     
     }
 
-    //=====================================================
-
-    // const completeRegistration = async( req, res = response ) => {
-    //     const { email, pass, paymentDetails } = req.body;
-    
-    //     try {
-    //         const user = await User.findOne({ email });
-    
-    //         if( !user ) {
-    //             return res.status(404).json({
-    //                 ok: false,
-    //                 msg: 'User not found'
-    //             });
-    //         }
-    
-    //         // Encrypt pass
-    //         const salt = bcryptjs.genSaltSync();
-    //         const hashedPass = bcryptjs.hashSync( pass, salt );
-    
-    //         user.pass = hashedPass;
-    
-    //         // TODO: Process paymentDetails with your payment solution.
-    //         // This could be sending data to Stripe, PayPal, etc.
-    //         // After successful payment, adjust the user's status and role accordingly.
-            
-    //         user.role = 'MEMBER';
-    //         user.status = 'active';
-    
-    //         await user.save();
-    
-    //         res.status(200).json({
-    //             ok: true,
-    //             msg: 'Registration completed successfully'
-    //         });
-    
-    //     } catch (error) {
-    //         console.log( error );
-    //         res.status(500).json({
-    //             ok: false,
-    //             msg: 'Unexpected error'
-    //         });
-    //     }
-    // }
-    
-    
-
-
+  
 
 module.exports = {
     getUsers,
