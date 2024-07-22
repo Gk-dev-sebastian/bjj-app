@@ -40,12 +40,7 @@ router.post('/', [
     // Aquí puedes agregar más middlewares de validación para los campos que sean necesarios
 ], createUsers);
 
-// Ruta para completar registro
-router.post('/complete-registration', [ 
-        // Middlewares de validación
-        check('email', 'Email is required').isEmail(),
-        check('pass', 'Password is required').notEmpty(),
-    ], completeRegistration);
+
 
 //=================================================================================================
 
