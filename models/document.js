@@ -13,6 +13,4 @@ const documentSchema = new Schema({
     }
 });
 
-const Document = model('Document', documentSchema);
-
-module.exports = Document;
+module.exports = model('Document', documentSchema);
