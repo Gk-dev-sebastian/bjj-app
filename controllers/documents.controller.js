@@ -14,7 +14,7 @@ exports.createDocument = async (req, res) => {
 // READ (all documents)
 exports.getAllDocuments = async (req, res) => {
     try {
-        const documents = await Document.find().populate('user', 'name email');
+        const documents = await Document.find();
         res.status(200).json({ success: true, data: documents });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
@@ -24,7 +24,7 @@ exports.getAllDocuments = async (req, res) => {
 // READ (one document by _id)
 exports.getDocumentById = async (req, res) => {
     try {
-        const document = await Document.findById(req.params.id).populate('user', 'name email');
+        const document = await Document.findById(req.params.id);
         if (!document) return res.status(404).json({ success: false, message: 'Document not found.' });
         res.status(200).json({ success: true, data: document });
     } catch (error) {
