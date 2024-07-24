@@ -17,7 +17,7 @@ const userSchema = new Schema({
     signature: String,
     type: String,
     bio: String,
-    todo: [{
+    document: [{
         type: Schema.Types.ObjectId,
         ref: 'Document'
     }],

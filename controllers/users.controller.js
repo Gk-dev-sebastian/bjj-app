@@ -4,13 +4,13 @@ const { response } = require('express');
 const bcryptjs = require('bcryptjs');
 
 const User = require('../models/user');
-const Documents = require('../models/document');
+const Document = require('../models/document');
 
 
 
     const getUsers = async(req, res) => {
         try {
-            const users = await User.find().populate('Documents');
+            const users = await User.find().populate('Document');
             res.status(200).json(users);
         } catch (error) {
             res.status(500).json({ message: 'Error fetching users', error });
@@ -21,7 +21,7 @@ const Documents = require('../models/document');
     const getUserById = async(req, res) => {
         try {
             const userId = req.params.id;
-            const user = await User.findById(userId).populate('Documents');
+            const user = await User.findById(userId).populate('Document');
 
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
@@ -44,7 +44,7 @@ const Documents = require('../models/document');
             }
 
             const users = await User.find({ status: status, role: role })
-                                    .populate('Documents');
+                                    .populate('Document');
 
             res.status(200).json(users);
 
@@ -58,7 +58,7 @@ const Documents = require('../models/document');
         try {
             const searchTerm = new RegExp(req.query.term, 'i');  // Buscar insensitivo a mayúsculas/minúsculas.
             const users = await User.find({ email: searchTerm })
-                                    .populate('Documents');
+                                    .populate('Document');
 
             res.status(200).json(users);
 
@@ -73,7 +73,7 @@ const Documents = require('../models/document');
             const userId = req.params.id;
             const updatedData = req.body;
             const user = await User.findByIdAndUpdate(userId, updatedData, { new: true })
-                                   .populate('Documents');
+                                   .populate('Document');
 
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
